@@ -1,19 +1,23 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { ReactNode } from 'react';
 import styles from './ErrorBlock.module.css';
 
 interface Props {
     active: boolean
-    setActive: Dispatch<SetStateAction<boolean>>
     children: ReactNode
+    fontSize?: number
+    padding?: number
 }
 
 export function ErrorBlock(props: Props) {
 
-    const { active, setActive, children } = props
+    const { active, children, fontSize, padding } = props
 
     return (
         <div className={styles.container}>
-            <div className={active ? `${styles.block} ${styles.active}` : `${styles.block}`}>
+            <div style={{
+                fontSize: fontSize,
+                padding: padding,
+            }} className={active ? `${styles.block} ${styles.active}` : `${styles.block}`}>
                 {children}
             </div>
         </div>

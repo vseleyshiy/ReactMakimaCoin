@@ -1,0 +1,43 @@
+.container {
+    height: 100%;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    padding-bottom: 100px;
+}
+
+.appWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading {
+    padding-top: 60px;
+    height: 100vh;
+    width: 100%;
+    background-image: url('/public/loading_bg.jpg');
+    background-color: rgb(30, 30, 30);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.loading__title {}
+
+.loading__text {
+    font-size: 20px;
+    color: rgb(180, 180, 180);
+}

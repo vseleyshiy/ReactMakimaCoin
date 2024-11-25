@@ -1,8 +1,19 @@
-# React + Vite
+# ReactMakimaCoin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### **Install "node_modules"**
 
-Currently, two official plugins are available:
+```
+npm install
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### **Start project**
+
+```
+npm run dev
+```
+
+## Description
+
+My copy Hamster Kombat by Makima <3 on Vite React with back-end on PHP.
+
+Having become more experienced now, I understand that the backend should be written completely differently. But then I wrote it exactly like that in PHP. This was my first experience working with a React backend. However, I tried, and this is what came of it.

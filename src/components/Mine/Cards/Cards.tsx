@@ -1,83 +1,37 @@
-import { Dispatch, MouseEvent, ReactNode, RefObject, SetStateAction, useCallback, useEffect, useState } from 'react'
-import { cards, roles } from '../../../database'
-import styles from '../../Boost/List/List.module.css'
-import stylesCards from './Cards.module.css'
-import { Card } from '../Card/Card'
-import { Modal } from '../../../utils/Modal/Modal'
-import { CircleDollarSign, TreesIcon } from 'lucide-react'
+import axios from 'axios'
+import { CircleDollarSign } from 'lucide-react'
+import { MouseEvent, ReactNode, useEffect, useState } from 'react'
+import { cards, exampleCard, user_cards } from '../../../database'
 import { UseUser } from '../../../hooks/useUser'
 import { ErrorBlock } from '../../../utils/ErrorBlock/ErrorBlock'
+import { Modal } from '../../../utils/Modal/Modal'
+import styles from '../../Boost/List/List.module.css'
+import { Card } from '../Card/Card'
+import { IHaveMoney, IInfo, PropsCards } from '../types'
+import stylesCards from './Cards.module.css'
 
-interface Props {
-    mineRef: RefObject<HTMLUListElement>
-    setWidth: Dispatch<SetStateAction<number>>
-}
+export function Cards(props: PropsCards) {
 
-type TypeCards = {
-    id: number;
-    name: string;
-    desc: string;
-    lvl: number;
-    profit: number;
-    allProfit: number;
-    price: number;
-    img: string;
-}
+    const { mineRef } = props;
 
-export function Cards(props: Props) {
+    const { id, balance, setBalance, setHourProfit, hourProfit } = UseUser();
 
-    const { mineRef, setWidth } = props
-
-    const { lvl, balance, setBalance, setHourProfit } = UseUser();
-
-    const exampleCard: TypeCards = {
-        id: 0,
-        name: 'Secret Makimacoin',
-        desc: 'Секретная карта, нельзя купить и поиметь с неё прибыль, это пасхалка, которую ты нашёл <3',
-        lvl: 999,
-        profit: 666,
-        allProfit: 777,
-        price: 999999,
-        img: '/public/secret_card.jpg',
-    }
-
-    const [modal, setModal] = useState(false);
-
-    const [info, setInfo] = useState({
+    const [info, setInfo] = useState<IInfo>({
         id: 0,
         content: exampleCard,
     })
 
-    const getModal = () => {
-        return <Modal modalActive={modal} setModalActive={setModal}>
-            <div className={styles.img__wrap}>
-                <img src={info.content.img} className={styles.img} />
-            </div>
-            <div className={styles.menu__title}>
-                {info.content.name}
-            </div>
-            <div className={styles.text}>
-                {info.content.desc}
-            </div>
-            <div className={styles.desc}>
-                +{info.content.profit} монет в час после улучшения
-            </div>
-            <div className={styles.info}>
-                <div className={styles.menu__price}>
-                    <CircleDollarSign size={30} />
-                    {info.content.price}
-                </div>
-                <div className={styles.menu__lvl}>
-                    {info.content.lvl} lvl
-                </div>
-            </div>
-            <button onClick={() => {
-                haveMoney(info.content.price, info.content.profit, info.content.id - 1, setHourProfit);
-                setModal(false);
-            }} className={styles.submit}>
-                Улучшить
-            </button>
-        </Modal >
+    const [modal, setModal] = useState(false);
+    const [error, setError] = useState(false);
+
+    // function for backend json cards
+    const addCards = async () => {
+        const data = {
+            status: 'cards',
+            id: id,
+            cards: user_cards,
+        }
+        await axios.post('https://reactmakimacoin.local/src/api/update.php', `data=${JSON.stringify(data)}`)
     }
 
     const onclickCard = (e: MouseEvent<HTMLLIElement>) => {
@@ -89,28 +43,38 @@ export function Cards(props: Props) {
     }
 
     useEffect(() => {
-        const dataCard = cards.find((item) => item.id === info.id);
-        if (!dataCard) return
+        let dataCard = user_cards.find((item) => item.id === info.id) ?
+            user_cards.find((item) => item.id === info.id) :
+            cards.find((item) => item.id === info.id);
+        if (!dataCard) return;
         setInfo({
             id: info.id,
             content: dataCard,
         });
+
     }, [modal])
 
-    const [error, setError] = useState(false);
+    const cardData: IHaveMoney = {
+        price: info.content.price,
+        value: info.content.profit,
+        index: info.content.id - 1,
+    }
 
-    const haveMoney = (price: number, value: number, index: number, func?: Dispatch<SetStateAction<number>> | null) => { // boosts.multitap[lvlclick].price
-        if (balance >= price) { // если баланс больше или равен цене
-            setBalance?.(prev => prev - price); // снимаем с баланса цену товара
-            cards[index].lvl += 1; // увеличиваем уровень
-            cards[index].price = Math.floor(cards[index].price * 1.2);
-            cards[index].allProfit += cards[index].profit;
-            cards[index].profit = Math.floor(cards[index].profit * 1.2);
-            func?.(prev => prev += value); // увеличиваем значение
-            let cut = (balance / roles[lvl].for_up) * 100;
-            setWidth(cut);
+    const haveMoney = (fn: IHaveMoney) => { // boosts.multitap[lvlclick].price
+        if (balance >= fn.price) { // если баланс больше или равен цене
+            setBalance?.(prev => prev - fn.price); // снимаем с баланса цену товара
+            cards[fn.index].lvl += 1; // увеличиваем уровень
+            cards[fn.index].price = Math.floor(cards[fn.index].price * 1.2);
+            cards[fn.index].allProfit += cards[fn.index].profit;
+            cards[fn.index].profit = Math.floor(cards[fn.index].profit * 1.2);
+            setHourProfit?.(prev => prev + fn.value); // увеличиваем значение
+            const dataCard = user_cards.find(item => item.id == cards[fn.index].id);
+            if (!dataCard) {
+                user_cards.push(cards[fn.index]);
+            }
+            addCards();
         } else {
-            setError(true)
+            setError(true);
         }
     }
 
@@ -122,21 +86,65 @@ export function Cards(props: Props) {
         return () => clearTimeout(timeout)
     }, [error])
 
+    // function for backend hourProfit
+    const addHourProfit = async () => {
+        const data = {
+            status: 'hourProfit',
+            id: id,
+            hourProfit: hourProfit,
+        }
+        await axios.post('https://reactmakimacoin.local/src/api/update.php', `data=${JSON.stringify(data)}`)
+    }
+
+    useEffect(() => {
+        addHourProfit();
+    }, [hourProfit])
+
     return (
         <>
-            <ErrorBlock active={error} setActive={setError}>
+            <ErrorBlock active={error}>
                 У вас недостаточно монет!
             </ErrorBlock>
             <ul className={stylesCards.list} ref={mineRef}>
                 {cards.map<ReactNode>(data => {
                     return (
-                        <li onClick={(e: MouseEvent<HTMLLIElement>) => onclickCard(e)} data-id={data.id} key={data.id} className={stylesCards.item}>
+                        <li onClick={(e: MouseEvent<HTMLLIElement>) => onclickCard(e)} data-id={data.id} key={data.id} className={stylesCards.item} style={{
+                            backgroundImage: `url(${data.img})`,
+                        }}>
                             <Card data={data} />
                         </li>
                     )
                 })}
             </ul>
-            {getModal()}
+            <Modal modalActive={modal} setModalActive={setModal}>
+                <div className={styles.img__wrap}>
+                    <img src={info.content.img} className={styles.img} />
+                </div>
+                <div className={styles.menu__title}>
+                    {info.content.name}
+                </div>
+                <div className={styles.text}>
+                    {info.content.description}
+                </div>
+                <div className={styles.desc}>
+                    +{info.content.profit} монет в час после улучшения
+                </div>
+                <div className={styles.info}>
+                    <div className={styles.menu__price}>
+                        <CircleDollarSign size={30} />
+                        {info.content.price}
+                    </div>
+                    <div className={styles.menu__lvl}>
+                        {info.content.lvl} lvl
+                    </div>
+                </div>
+                <button onClick={() => {
+                    haveMoney(cardData);
+                    setModal(false);
+                }} className={styles.submit}>
+                    Улучшить
+                </button>
+            </Modal >
         </>
     )
 }
