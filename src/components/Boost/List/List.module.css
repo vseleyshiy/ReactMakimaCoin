@@ -1,0 +1,98 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
+}
+
+.item {
+    background-color: rgb(30, 30, 30);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.title {}
+
+.info {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.lvl {
+    font-size: 15px;
+    color: rgb(120, 120, 120);
+}
+
+.img__wrap {
+    height: 100px;
+    width: 100px;
+}
+
+.img {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.menu {}
+
+.menu__title {
+    font-size: 20px;
+}
+
+.text {}
+
+.desc {}
+
+.menu__price {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.menu__lvl {
+    font-size: 20px;
+    color: rgb(140, 140, 140);
+}
+
+.submit {
+    color: white;
+    background-color: rgb(56, 56, 255);
+    width: 100%;
+    border-radius: 15px;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.submit.ex {
+    pointer-events: none;
+    background-color: rgb(50, 50, 50);
+}

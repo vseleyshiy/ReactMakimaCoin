@@ -1,0 +1,87 @@
+.earn {
+    max-width: 450px;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+    padding: 10px;
+}
+
+.top__title {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+}
+
+.top__img {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0px 0px 50px white;
+}
+
+.block {
+    width: 100%;
+}
+
+.block__title {
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(30, 30, 30);
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.img__wrap {
+    height: 40px;
+    width: 40px;
+}
+
+.img {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+}
+
+.title {
+    font-size: 15px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}

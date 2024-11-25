@@ -1,0 +1,76 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(30, 30, 30);
+    /* border-bottom: 1px solid white; */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.info {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.imgWrap {
+    width: 40px;
+    height: 40px;
+}
+
+.img {
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.username {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    width: 100%;
+    font-size: 18px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.downtitle {
+    font-size: 10px;
+}
+
+.exchange {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    box-shadow: 0px 0px 2px white;
+    background-color: white;
+    padding: 0px 10px;
+    border-radius: 15px;
+}
+
+.exchangeImgWrap {
+    width: 35px;
+    height: 30px;
+}
+
+.exchangeImg {
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.exchangeName {
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+}

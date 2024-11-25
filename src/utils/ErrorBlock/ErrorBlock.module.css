@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.block {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    position: fixed;
+    bottom: 15%;
+    /* background-color: rgb(50, 50, 50); */
+    background-color: rgb(255, 80, 80);
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    width: 90%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px rgb(255, 80, 80);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.block.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
