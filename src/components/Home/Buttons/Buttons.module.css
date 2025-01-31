@@ -1,0 +1,28 @@
+.list {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(29, 29, 29);
+    padding: 8px;
+}
+
+.item {
+    transition: scale 0.1s ease;
+}
+
+.item:hover {
+    scale: 1.05;
+}
+
+.link {
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 3px;
+    font-size: 12px;
+}

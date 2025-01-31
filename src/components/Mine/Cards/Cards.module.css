@@ -1,0 +1,24 @@
+.list {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.item {
+    width: 50%;
+    background-color: rgb(50, 50, 50);
+    border-radius: 15px;
+    flex: 0 1 calc((100% - 10px) / 2);
+    transition: scale 0.1s;
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.item:hover {
+    scale: 1.01;
+}
